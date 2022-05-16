@@ -5,18 +5,18 @@ zephyr rtos environment setting scripts
 Installation
 
 ```bash
-$ curl -fLo ~/zephyrenv --create-dirs \
+curl -fLo ~/zephyrenv --create-dirs \
     https://raw.githubusercontent.com/ys-oh/zephyr_env/main/zephyrenv
 ```
 
 Usage
 
 ```bash
-$ source ~/zephyrenv
+source ~/zephyrenv
 ```
 
 Terminate venv
 
 ```bash
-$ deactivate
+deactivate
 ```
