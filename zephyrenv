@@ -1,0 +1,60 @@
+#! /bin/bash
+
+
+DEFAULT_ZEPHYRPROJECT=~/.zephyrproject/
+DEFAULT_ZEPHYRENV=$DEFAULT_ZEPHYRPROJECT/zephyrenv
+
+
+if [ -n $ZEPHYR_BASE ]; then
+	ZEPHYR_BASE=~/.zephyrproject/zephyr
+	ZEPHYR_BASE_unset=1
+fi
+
+
+if [ -n $ZEPHYR_TOOLCHAIN_VARIANT ]; then
+	ZEPHYR_TOOLCHAIN_VARIANT=zephyr
+	ZEPHYR_TOOLCHAIN_VARIANT_unset=1
+fi
+
+
+if [ -n $ZEPHYR_VENV ]; then
+	ZEPHYR_VENV=$DEFAULT_ZEPHYRENV/bin/activate
+	ZEPHYR_VENV_unset=1
+fi 
+
+
+if [[ $ZEPHYR_VENV ]]; then
+	source $ZEPHYR_VENV
+
+	eval "deactivate_super${$(declare -f deactivate)#deactivate}"	
+
+	deactivate () {
+
+		deactivate_super
+
+		unset -f deactivate_super
+
+
+		if [ $ZEPHYR_VENV_unset ]; then
+			unset ZEPHYR_VENV 
+			unset ZEPHYR_VENV_unset 
+		fi
+
+		if [ $ZEPHYR_BASE_unset ]; then
+			unset ZEPHYR_BASE
+			unset ZEPHYR_BASE_unset 
+		fi
+
+		if [ $ZEPHYR_TOOLCHAIN_VARIANT_unset ]; then
+			unset ZEPHYR_TOOLCHAIN_VARIANT 
+			unset ZEPHYR_TOOLCHAIN_VARIANT_unset 
+		fi
+	}
+else
+	echo "zephyr venv is not set."
+	# TODO: set python venv for zephyrproject.
+fi
+
+
+unset DEFAULT_ZEPHYRPROJECT
+unset DEFAULT_ZEPHYRENV
