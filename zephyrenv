@@ -24,6 +24,13 @@ fi
 
 if [ -n $ZEPHYR_VENV ]; then
 	ZEPHYR_VENV=$DEFAULT_ZEPHYRENV/bin/activate
+
+	# check venv & auto create
+	if [[ ! -f $ZEPHYR_VENV ]]; then
+		mkdir -p $DEFAULT_ZEPHYRPROJECT
+		python3 -m venv $DEFAULT_ZEPHYRENV
+	fi
+
 	ZEPHYR_VENV_unset=1
 fi 
 
@@ -51,6 +58,19 @@ deactivate_envs () {
 if [[ $ZEPHYR_VENV ]]; then
 	source $ZEPHYR_VENV
 
+	# check west python package
+	local check_west=$(pip list | grep west)
+
+	if [ -z $check_west ]; then
+		# install west
+		pip install west
+
+		# install zephyr dependencies
+		pip install -r $ZEPHYR_BASE/scripts/requirements.txt
+	fi
+
+	unset check_west
+
 	eval "deactivate_super${$(declare -f deactivate)#deactivate}"	
 
 	deactivate () {
@@ -62,11 +82,6 @@ if [[ $ZEPHYR_VENV ]]; then
 		deactivate_envs
 
 	}
-else
-	echo "zephyr venv is not set. skip venv activation."
-	# TODO: set python venv for zephyrproject.
-	
-	deactivate_envs
 fi
 
 
