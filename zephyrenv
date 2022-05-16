@@ -6,7 +6,7 @@ DEFAULT_ZEPHYRENV=$DEFAULT_ZEPHYRPROJECT/zephyrenv
 
 
 if [ -n $ZEPHYR_BASE ]; then
-	ZEPHYR_BASE=~/.zephyrproject/zephyr
+	export ZEPHYR_BASE=~/.zephyrproject/zephyr
 	ZEPHYR_BASE_unset=1
 	
 	if [[ ! -f $ZEPHYR_BASE/west.yml ]]; then
@@ -17,7 +17,7 @@ fi
 
 
 if [ -n $ZEPHYR_TOOLCHAIN_VARIANT ]; then
-	ZEPHYR_TOOLCHAIN_VARIANT=zephyr
+	export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
 	ZEPHYR_TOOLCHAIN_VARIANT_unset=1
 fi
 
