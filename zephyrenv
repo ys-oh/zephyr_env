@@ -3,7 +3,7 @@
 
 DEFAULT_ZEPHYRPROJECT=~/.zephyrproject/
 DEFAULT_ZEPHYRENV=$DEFAULT_ZEPHYRPROJECT/zephyrenv
-
+DEFAULT_ZEPHYR_SDK_VERSION=0.15.1
 
 if [ -n $ZEPHYR_BASE ]; then
 	export ZEPHYR_BASE=~/.zephyrproject/zephyr
@@ -89,7 +89,7 @@ if [ -n $ZEPHYR_SDK_INSTALL_DIR ]; then
   SDKS=$(find ${DEFAULT_ZEPHYRPROJECT}/zephyr-sdk-*/sdk_version)
 
   if [ -z $SDKS ]; then
-    ZEPHYR_SDK_VERSION=0.15.1
+    ZEPHYR_SDK_VERSION=${DEFAULT_ZEPHYR_SDK_VERSION}
     ZEPHYR_SDK_FILE="zephyr-sdk-${ZEPHYR_SDK_VERSION}_$(echo "$(uname -s)-$(uname -m)" | tr '[:upper:]' '[:lower:]')"
     ZEPHYR_SDK_URL="https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v${ZEPHYR_SDK_VERSION}/${ZEPHYR_SDK_FILE}.tar.gz"
 
