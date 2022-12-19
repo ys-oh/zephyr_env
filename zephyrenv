@@ -90,7 +90,7 @@ if [ -z $ZEPHYR_SDK_INSTALL_DIR ]; then
 
     echo "install zephyr sdk ${ZEPHYR_SDK_VERSION}"
     bash -c "cd ${DEFAULT_ZEPHYRPROJECT};wget ${ZEPHYR_SDK_URL};tar xvf ${ZEPHYR_SDK_FILE}.tar.gz"
-    bash -c "cd ${DEFAULT_ZEPHYRPROJECT}/${ZEPHYR_SDK_FILE};./setup.sh"
+    bash -c "cd ${DEFAULT_ZEPHYRPROJECT}/zephyr-sdk-${ZEPHYR_SDK_VERSION};./setup.sh"
   fi
 
   unset SDKS
