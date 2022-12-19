@@ -58,18 +58,13 @@ deactivate_envs () {
 if [[ $ZEPHYR_VENV ]]; then
 	source $ZEPHYR_VENV
 
-	# check west python package
-	local check_west=$(pip list | grep west)
-
-	if [ -z $check_west ]; then
+	if [ -z "$(pip list | grep west)" ]; then
 		# install west
 		pip install west
 
 		# install zephyr dependencies
 		pip install -r $ZEPHYR_BASE/scripts/requirements.txt
 	fi
-
-	unset check_west
 
 	eval "deactivate_super${$(declare -f deactivate)#deactivate}"	
 
@@ -85,7 +80,7 @@ if [[ $ZEPHYR_VENV ]]; then
 fi
 
 # check sdk
-if [ -n $ZEPHYR_SDK_INSTALL_DIR ]; then
+if [ -z $ZEPHYR_SDK_INSTALL_DIR ]; then
   SDKS=$(find ${DEFAULT_ZEPHYRPROJECT}/zephyr-sdk-*/sdk_version)
 
   if [ -z $SDKS ]; then
